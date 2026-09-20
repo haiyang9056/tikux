@@ -5,10 +5,17 @@ base = os.path.dirname(os.path.abspath(__file__))
 tmp = os.path.join(base, '_bank_tmp')
 sys.path.insert(0, tmp)
 
-import s_a, s_b, s_c, s_d, m, m2
+import importlib
 
-singles = s_a.singles_a + s_b.singles_b + s_c.singles_c + s_d.singles_d
-multis = m.multis + m2.multis_b
+_single_mods = [importlib.import_module('q%d' % i) for i in range(10)]
+_multi_mods = [importlib.import_module('mq%d' % i) for i in range(4)]
+
+singles = []
+for i, mod in enumerate(_single_mods):
+    singles += getattr(mod, 'q%d' % i)
+multis = []
+for i, mod in enumerate(_multi_mods):
+    multis += getattr(mod, 'mq%d' % i)
 
 # ---- validation ----
 errors = []
@@ -67,7 +74,7 @@ for fn in ['index.html']:
     new_html = html[:start] + 'var QB = ' + json_str + end_marker + html[end + len(end_marker):]
 
     # 同步顶部统计数字，避免题库变化后页面上的数字过期
-    new_html = re.sub(r'覆盖[^|<]*\| 每次抽60题', '覆盖第三、四章全部内容 | 每次抽60题', new_html)
+    new_html = re.sub(r'覆盖[^|<]*\| 每次抽60题', '覆盖上册序言、前言及 PART 01、PART 02 全部内容 | 每次抽60题', new_html)
     new_html = re.sub(r'📝 单选\d+题', '📝 单选%d题' % len(singles), new_html)
     new_html = re.sub(r'📋 多选\d+题', '📋 多选%d题' % len(multis), new_html)
 

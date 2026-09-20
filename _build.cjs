@@ -21,16 +21,10 @@ function loadBank(file, varName) {
   return list;
 }
 
-const singles = [
-  ...loadBank('s_a.py', 'singles_a'),
-  ...loadBank('s_b.py', 'singles_b'),
-  ...loadBank('s_c.py', 'singles_c'),
-  ...loadBank('s_d.py', 'singles_d'),
-];
-const multis = [
-  ...loadBank('m.py', 'multis'),
-  ...loadBank('m2.py', 'multis_b'),
-];
+const singles = [];
+for (let i = 0; i < 10; i++) singles.push(...loadBank(`q${i}.py`, `q${i}`));
+const multis = [];
+for (let i = 0; i < 4; i++) multis.push(...loadBank(`mq${i}.py`, `mq${i}`));
 
 // ---- validation ----
 const errors = [];
@@ -99,7 +93,7 @@ if (start === -1 || end === -1) throw new Error('index.html 中找不到 QB 块'
 html = html.slice(0, start) + 'var QB = ' + jsonStr + endMarker + html.slice(end + endMarker.length);
 
 html = html
-  .replace(/覆盖[^|<]*\| 每次抽60题/, '覆盖第三、四章全部内容 | 每次抽60题')
+  .replace(/覆盖[^|<]*\| 每次抽60题/, '覆盖上册序言、前言及 PART 01、PART 02 全部内容 | 每次抽60题')
   .replace(/📝 单选\d+题/, `📝 单选${singles.length}题`)
   .replace(/📋 多选\d+题/, `📋 多选${multis.length}题`);
 
