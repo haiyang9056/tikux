@@ -22,7 +22,7 @@ function loadBank(file, varName) {
 }
 
 const singles = [];
-for (let i = 0; i < 10; i++) singles.push(...loadBank(`q${i}.py`, `q${i}`));
+for (let i = 1; i < 10; i++) singles.push(...loadBank(`q${i}.py`, `q${i}`));
 const multis = [];
 for (let i = 0; i < 4; i++) multis.push(...loadBank(`mq${i}.py`, `mq${i}`));
 
@@ -93,7 +93,7 @@ if (start === -1 || end === -1) throw new Error('index.html 中找不到 QB 块'
 html = html.slice(0, start) + 'var QB = ' + jsonStr + endMarker + html.slice(end + endMarker.length);
 
 html = html
-  .replace(/覆盖[^|<]*\| 每次抽60题/, '覆盖上册序言、前言及 PART 01、PART 02 全部内容 | 每次抽60题')
+  .replace(/覆盖[^|<]*\| 每次抽60题/, '覆盖上册 PART 01、PART 02 全部内容 | 每次抽60题')
   .replace(/📝 单选\d+题/, `📝 单选${singles.length}题`)
   .replace(/📋 多选\d+题/, `📋 多选${multis.length}题`);
 

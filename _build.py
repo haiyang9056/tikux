@@ -7,7 +7,7 @@ sys.path.insert(0, tmp)
 
 import importlib
 
-_single_mods = [importlib.import_module('q%d' % i) for i in range(10)]
+_single_mods = [importlib.import_module('q%d' % i) for i in range(1, 10)]
 _multi_mods = [importlib.import_module('mq%d' % i) for i in range(4)]
 
 singles = []
@@ -74,7 +74,7 @@ for fn in ['index.html']:
     new_html = html[:start] + 'var QB = ' + json_str + end_marker + html[end + len(end_marker):]
 
     # 同步顶部统计数字，避免题库变化后页面上的数字过期
-    new_html = re.sub(r'覆盖[^|<]*\| 每次抽60题', '覆盖上册序言、前言及 PART 01、PART 02 全部内容 | 每次抽60题', new_html)
+    new_html = re.sub(r'覆盖[^|<]*\| 每次抽60题', '覆盖上册 PART 01、PART 02 全部内容 | 每次抽60题', new_html)
     new_html = re.sub(r'📝 单选\d+题', '📝 单选%d题' % len(singles), new_html)
     new_html = re.sub(r'📋 多选\d+题', '📋 多选%d题' % len(multis), new_html)
 
